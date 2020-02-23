@@ -17,37 +17,7 @@
 	$('.output table tr').click(function () {
 		$(this).toggleClass('active');
 	});
-
-	//Выбор даты
-	/*
-	$('.date-start, .date-end').datepicker({
-		firstDay: 1,
-		format: 'dd.mm.yyyy',
-		yearRange: 1,
-		i18n: {
-			cancel: 'Закрыть',
-			clear: 'Очистить',
-			done: 'Ок',
-			months: [
-				'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-			],
-			monthsShort: [
-				'Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'
-			],
-			weekdays: [
-				'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'
-			],
-			weekdaysShort: [
-				'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'
-
-			],
-			weekdaysAbbrev: [
-				'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'
-			]
-		}
-	});
-	*/
-
+	
 	$('button.ok').click(function () {
 		let dateStart = $('.date-start').val();
 		var dayS = dateStart[0] + dateStart[1];
@@ -73,8 +43,21 @@
 
 			let ostW = ostD / 7;//Недель осталось
 			let proW = year / 7 - ostW;//Недель прошло
-			$('.item3').html(`<div>${Math.floor(proW)}</div>`);
-			$('.item4').html(`<div>${Math.ceil(ostW)}</div>`);
+			$('.item3').html(`<div>${Math.ceil(proW)}</div>`);
+			$('.item4').html(`<div>${Math.floor(ostW)}</div>`);
+
+			let ostMo = ostD / 30;//Месяцев осталось
+			let proMo = year / 30 - ostMo;//Месяцев прошло
+			//$('.item13').html(`<div>${Math.floor(proMo)}</div>`);
+			//$('.item14').html(`<div>${Math.ceil(ostMo)}</div>`);
+			if(proMo.toFixed(0)==12)
+				$('.item13').html(`<div> ${proMo.toFixed(0)}</div>`);
+			else
+				$('.item13').html(`<div>≈ ${proMo.toFixed(0)}</div>`);
+			if(ostMo.toFixed(0)==0)
+				$('.item14').html(`<div> ${ostMo.toFixed(0)}</div>`);
+			else
+				$('.item14').html(`<div>≈ ${ostMo.toFixed(0)}</div>`);
 
 			let ostP = ostD / year * 100;//Отсалось в процентах
 			$('.item1').html(`<div>${(100 - ostP).toFixed(6)}</div>`);
@@ -103,6 +86,12 @@
 				</div>
 			`);
 		}
-		setInterval(draw, 1000);
+		//Если уже ДМБ то сообщить об этом
+		var timerID = setInterval(draw, 1000);
+		if (new Date >= over) {
+			clearInterval(timerID);
+			$('body').css("background-image", "url('img/home.jpg')");
+			$("body").html('<div class="home">Чуи, мы дома!</div>');	
+		}
 	});
 });

@@ -5,7 +5,6 @@
     padding: 0;
 }
 body {
-    background-image: url(../img/bg4.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center right;
@@ -92,5 +91,12 @@ label {
 .item0 {
     background-color: rgba(0, 0, 0, 0.6);
 }
-
+.home {
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 2px #000;
+    display: inline-block;
+    padding: 15px;
+}
 /*Слайдер*/
